@@ -11,7 +11,7 @@ pub struct Conversation {
     pub messages: Vec<Message>,
 }
 
-impl Conversaton {
+impl Conversation {
     pub fn new() -> Conversation {
         Conversation {
             messages: Vec::new(),

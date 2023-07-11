@@ -1,5 +1,7 @@
 use crate::model::conversation::{Conversation, Message};
+use cfg_if::cfg_if;
 use leptos::*;
+
 #[server(Converse "/api")]
 pub async fn converse(cx: Scope, prompt: Conversation) -> Result<String, ServerFnError> {
     use actix_web::dev::ConnectionInfo;
@@ -7,10 +9,9 @@ pub async fn converse(cx: Scope, prompt: Conversation) -> Result<String, ServerF
     use leptos_actix::extract;
     use llm::models::Llama;
 
-    let model = extract(
-        cx,
-        |data: Data<Llama>, _connection: ConversationInfo| async { data.into_inner() },
-    )
+    let model = extract(cx, |data: Data<Llama>, _connection: ConnectionInfo| async {
+        data.into_inner()
+    })
     .await
     .unwrap();
 
